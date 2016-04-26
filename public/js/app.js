@@ -119,8 +119,6 @@ function createLights() {
 	scene.add(hemisphereLight);
 	scene.add(shadowLight);
 
-	console.log(scene);
-
 }
 
 //#Ground
@@ -357,7 +355,6 @@ function handleMouseUp() {
 }
 
 function init() {
-	console.log('loaded')
 	createScene();
 	createLights();
 	createGround();
