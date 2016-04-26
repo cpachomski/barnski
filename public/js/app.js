@@ -312,7 +312,7 @@ function updateBus() {
 };
 
 function rotateBusX(){
-	bus.mesh.rotation.y += .2;
+	bus.mesh.rotation.y += .02;
 }
 
 function normalize(v, vmin, vmax, tmin, tmax) {
@@ -325,7 +325,7 @@ function normalize(v, vmin, vmax, tmin, tmax) {
 }
 
 function loop() {
-	
+
 	updateBus();
 
 	renderer.render(scene, camera);
@@ -334,6 +334,7 @@ function loop() {
 
 
 var mousePos= { x:0, y:0 };
+var rotateInterval;
 
 function handleMouseMove(e) {
 	var tx = -1 + (e.clientX / WIDTH) *2;
@@ -341,8 +342,12 @@ function handleMouseMove(e) {
 	mousePos = {x:tx, y:ty};
 }
 
-function handleClick() {
-	rotateBusX();
+function handleMouseDown() {
+	rotateInterval = window.setInterval(rotateBusX, 10);
+}
+
+function handleMouseUp() {
+	window.clearInterval(rotateInterval);
 }
 
 function init() {
@@ -357,7 +362,8 @@ function init() {
 	// createBarn();
 	// createGround();
 	document.addEventListener('mousemove', handleMouseMove, false);
-	document.addEventListener('click', handleClick, false);
+	document.addEventListener('mousedown', handleMouseDown, false);
+	document.addEventListener('mouseup', handleMouseUp, false);
 	loop();
 }
 
