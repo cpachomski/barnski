@@ -97,7 +97,7 @@ function createLights() {
 	// It acts like the sun, that means that all the rays produced are parallel.
 	shadowLight = new THREE.DirectionalLight(0xffffff, .8);
 
-	shadowLight.position.set(-200, 150, 100);
+	shadowLight.position.set(100, 150, 100);
 
 	shadowLight.castShadow = true;
 
@@ -230,7 +230,7 @@ var Bus = function() {
 
 
 	//create the main bus
-	var geomChasis = new THREE.BoxGeometry(100, 25, 25, 1, 1, 1);
+	var geomChasis = new THREE.BoxGeometry(75, 25, 25, 1, 1, 1);
 	var matChasis = new THREE.MeshPhongMaterial({color: Colors.yellow, shading: THREE.FlatShading});
 	var chasis = new THREE.Mesh(geomChasis, matChasis);
 	chasis.castShadow = true;
@@ -241,16 +241,34 @@ var Bus = function() {
 	var geomHood = new THREE.BoxGeometry(25,15,25,1,1,1);
 	var matHood = new THREE.MeshPhongMaterial({color: Colors.yellow, shading: THREE.FlatShading});
 	var hood = new THREE.Mesh(geomHood, matHood);
-	hood.position.x = 50;
+	hood.position.x = 40;
 	hood.position.y = -5;
+	hood.position.z = -1;
 	hood.castShadow = true;
+	chasis.receiveShadow = true;
 	this.mesh.add(hood)
 
-	//create front tire
-	var geomFrontTire = new Three.boxGeometry(5,5,5,1,1,1);
+	// create front tire
+	var geomFrontTire = new THREE.BoxGeometry(7,7,7,1,1,1);
 	var matFrontTire = new THREE.MeshPhongMaterial({color: Colors.black, shading: THREE.FlatShading});
-	var frontTire = THREE.mesh(geomFrontTire, matFrontTire);
-	
+	var frontTire = new THREE.Mesh(geomFrontTire, matFrontTire);
+	frontTire.position.x = 30;
+	frontTire.position.y = 0;
+	frontTire.position.z = 50;
+	frontTire.castShadow = true;
+	frontTire.receiveShadow = true;
+	this.mesh.add(frontTire);
+
+	// create back tire
+	var geomBackTire = new THREE.BoxGeometry(7,7,7,1,1,1);
+	var matBackTire = new THREE.MeshPhongMaterial({color: Colors.black, shading: THREE.FlatShading});
+	var backTire = new THREE.Mesh(geomBackTire, matBackTire);
+	backTire.position.x = -25;
+	backTire.position.y = 0;
+	backTire.position.z = 50;
+	backTire.castShadow = true;
+	backTire.receiveShadow = true;
+	this.mesh.add(backTire);
 }
 
 
