@@ -249,26 +249,26 @@ var Bus = function() {
 	this.mesh.add(hood)
 
 	// create front tire
-	var geomFrontTire = new THREE.BoxGeometry(7,7,7,1,1,1);
+	var geomFrontTire = new THREE.BoxGeometry(7,7,2,1,1,1);
 	var matFrontTire = new THREE.MeshPhongMaterial({color: Colors.black, shading: THREE.FlatShading});
-	var frontTire = new THREE.Mesh(geomFrontTire, matFrontTire);
-	frontTire.position.x = 30;
-	frontTire.position.y = 0;
-	frontTire.position.z = 50;
-	frontTire.castShadow = true;
-	frontTire.receiveShadow = true;
-	this.mesh.add(frontTire);
+	this.frontTire = new THREE.Mesh(geomFrontTire, matFrontTire);
+	this.frontTire.position.x = 30;
+	this.frontTire.position.y = 5;
+	this.frontTire.position.z = 50;
+	this.frontTire.castShadow = true;
+	this.frontTire.receiveShadow = true;
+	this.mesh.add(this.frontTire);
 
 	// create back tire
-	var geomBackTire = new THREE.BoxGeometry(7,7,7,1,1,1);
+	var geomBackTire = new THREE.BoxGeometry(7,7,2,1,1,1);
 	var matBackTire = new THREE.MeshPhongMaterial({color: Colors.black, shading: THREE.FlatShading});
-	var backTire = new THREE.Mesh(geomBackTire, matBackTire);
-	backTire.position.x = -25;
-	backTire.position.y = 0;
-	backTire.position.z = 50;
-	backTire.castShadow = true;
-	backTire.receiveShadow = true;
-	this.mesh.add(backTire);
+	this.backTire = new THREE.Mesh(geomBackTire, matBackTire);
+	this.backTire.position.x = -20;
+	this.backTire.position.y = 5;
+	this.backTire.position.z = 50;
+	this.backTire.castShadow = true;
+	this.backTire.receiveShadow = true;
+	this.mesh.add(this.backTire);
 }
 
 
@@ -276,11 +276,17 @@ var bus;
 
 function createBus() {
 	bus = new Bus();
-	bus.mesh.position.y = 50;
+	bus.mesh.position.y = 25;
 	scene.add(bus.mesh);
 }
 
+function loop() {
+	bus.frontTire.rotation.z -= .1;
+	bus.backTire.rotation.z -= .1;
 
+	renderer.render(scene, camera);
+	requestAnimationFrame(loop);
+}
 
 
 function init() {
@@ -289,18 +295,14 @@ function init() {
 	createLights();
 	createGround();
 	createBus();
+
+
 	// createBarn();
 	// createGround();
-	// 
-	
-	window.addEventListener('click', function() {
-		bus.mesh.rotateX(Math.PI/2);
-		console.log('rotate');
-	});
 
 	createSky();
-	renderer.render(scene, camera);
-	// loop();
+
+	loop();
 }
 
 
