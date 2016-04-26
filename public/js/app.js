@@ -249,23 +249,23 @@ var Bus = function() {
 	this.mesh.add(hood)
 
 	// create front tire
-	var geomFrontTire = new THREE.BoxGeometry(7,7,2,1,1,1);
+	var geomFrontTire = new THREE.BoxGeometry(10,10,2,1,1,1);
 	var matFrontTire = new THREE.MeshPhongMaterial({color: Colors.black, shading: THREE.FlatShading});
 	this.frontTire = new THREE.Mesh(geomFrontTire, matFrontTire);
 	this.frontTire.position.x = 30;
-	this.frontTire.position.y = 5;
-	this.frontTire.position.z = 50;
+	this.frontTire.position.y = -12;
+	this.frontTire.position.z = 12;
 	this.frontTire.castShadow = true;
 	this.frontTire.receiveShadow = true;
 	this.mesh.add(this.frontTire);
 
 	// create back tire
-	var geomBackTire = new THREE.BoxGeometry(7,7,2,1,1,1);
+	var geomBackTire = new THREE.BoxGeometry(10,10,2,1,1,1);
 	var matBackTire = new THREE.MeshPhongMaterial({color: Colors.black, shading: THREE.FlatShading});
 	this.backTire = new THREE.Mesh(geomBackTire, matBackTire);
 	this.backTire.position.x = -20;
-	this.backTire.position.y = 5;
-	this.backTire.position.z = 50;
+	this.backTire.position.y = -12;
+	this.backTire.position.z = 12;
 	this.backTire.castShadow = true;
 	this.backTire.receiveShadow = true;
 	this.mesh.add(this.backTire);
@@ -278,16 +278,46 @@ function createBus() {
 	bus = new Bus();
 	bus.mesh.position.y = 25;
 	scene.add(bus.mesh);
+};
+
+function updateBus() {
+	var targetX = normalize(mousePos.x, -1, 1, -100, 100);
+	var targetY = normalize(mousePos.y, -1, 1, 25, 175);
+
+	bus.mesh.position.y = targetY;
+	bus.mesh.position.x = targetX;
+	bus.frontTire.rotation.z -= .2;
+	bus.backTire.rotation.z -= .2;
+
+};
+
+function normalize(v, vmin, vmax, tmin, tmax) {
+	var nv = Math.max(Math.min(v,vmax), vmin);
+	var dv = vmax-vmin;
+	var pc = (nv-vmin)/dv;
+	var dt = tmax-tmin;
+	var tv = tmin + (pc*dt);
+	return tv;
 }
 
 function loop() {
 	bus.frontTire.rotation.z -= .1;
 	bus.backTire.rotation.z -= .1;
 
+	updateBus();
+
 	renderer.render(scene, camera);
 	requestAnimationFrame(loop);
-}
+};
 
+
+var mousePos= { x:0, y:0 };
+
+function handleMouseMove(e) {
+	var tx = -1 + (e.clientX / WIDTH) *2;
+	var ty = -1 + (e.clientY / HEIGHT) *2;
+	mousePos ={x:tx, y:ty};
+}
 
 function init() {
 	console.log('loaded')
@@ -295,12 +325,12 @@ function init() {
 	createLights();
 	createGround();
 	createBus();
+	createSky();
 
 
 	// createBarn();
 	// createGround();
-
-	createSky();
+	document.addEventListener('mousemove', handleMouseMove, false);
 
 	loop();
 }
