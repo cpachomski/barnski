@@ -243,32 +243,51 @@ var Bus = function() {
 	var hood = new THREE.Mesh(geomHood, matHood);
 	hood.position.x = 40;
 	hood.position.y = -5;
-	hood.position.z = -1;
+	hood.position.z = 0;
 	hood.castShadow = true;
 	chasis.receiveShadow = true;
 	this.mesh.add(hood)
 
-	// create front tire
-	var geomFrontTire = new THREE.BoxGeometry(10,10,2,1,1,1);
-	var matFrontTire = new THREE.MeshPhongMaterial({color: Colors.black, shading: THREE.FlatShading});
-	this.frontTire = new THREE.Mesh(geomFrontTire, matFrontTire);
-	this.frontTire.position.x = 30;
-	this.frontTire.position.y = -12;
-	this.frontTire.position.z = 12;
-	this.frontTire.castShadow = true;
-	this.frontTire.receiveShadow = true;
-	this.mesh.add(this.frontTire);
+	// create tires
+	var geomTire = new THREE.BoxGeometry(10,10,2,1,1,1);
+	var matTire = new THREE.MeshPhongMaterial({color: Colors.black, shading: THREE.FlatShading});
+	this.frontRightTire = new THREE.Mesh(geomTire, matTire);
+	this.frontLeftTire = new THREE.Mesh(geomTire, matTire);
+	this.backRightTire = new THREE.Mesh(geomTire, matTire);
+	this.backLeftTire = new THREE.Mesh(geomTire, matTire);
 
-	// create back tire
-	var geomBackTire = new THREE.BoxGeometry(10,10,2,1,1,1);
-	var matBackTire = new THREE.MeshPhongMaterial({color: Colors.black, shading: THREE.FlatShading});
-	this.backTire = new THREE.Mesh(geomBackTire, matBackTire);
-	this.backTire.position.x = -20;
-	this.backTire.position.y = -12;
-	this.backTire.position.z = 12;
-	this.backTire.castShadow = true;
-	this.backTire.receiveShadow = true;
-	this.mesh.add(this.backTire);
+	//positionTires and add to mesh
+
+	
+	this.frontRightTire.position.x = 30;
+	this.frontRightTire.position.y = -12;
+	this.frontRightTire.position.z = 14;
+	this.frontRightTire.castShadow = true;
+	this.frontRightTire.receiveShadow = true;
+
+	this.frontLeftTire.position.x = 30;
+	this.frontLeftTire.position.y = -12;
+	this.frontLeftTire.position.z = -14;
+	this.frontLeftTire.castShadow = true;
+	this.frontLeftTire.receiveShadow = true;
+
+	this.backRightTire.position.x = -20;
+	this.backRightTire.position.y = -12;
+	this.backRightTire.position.z = 14;
+	this.backRightTire.castShadow = true;
+	this.backRightTire.receiveShadow = true;
+
+
+	this.backLeftTire.position.x = -20;
+	this.backLeftTire.position.y = -12;
+	this.backLeftTire.position.z = -14;
+	this.backLeftTire.castShadow = true;
+	this.backLeftTire.receiveShadow = true;
+
+	this.mesh.add(this.frontRightTire);
+	this.mesh.add(this.frontLeftTire);
+	this.mesh.add(this.backRightTire);
+	this.mesh.add(this.backLeftTire);
 }
 
 
@@ -286,10 +305,15 @@ function updateBus() {
 
 	bus.mesh.position.y = targetY;
 	bus.mesh.position.x = targetX;
-	bus.frontTire.rotation.z -= .2;
-	bus.backTire.rotation.z -= .2;
-
+	bus.frontRightTire.rotation.z -= .2;
+	bus.frontLeftTire.rotation.z -= .2;
+	bus.backRightTire.rotation.z -= .2;
+	bus.backLeftTire.rotation.z -= .2;
 };
+
+function rotateBusX(){
+	bus.mesh.rotation.y += .2;
+}
 
 function normalize(v, vmin, vmax, tmin, tmax) {
 	var nv = Math.max(Math.min(v,vmax), vmin);
@@ -301,9 +325,7 @@ function normalize(v, vmin, vmax, tmin, tmax) {
 }
 
 function loop() {
-	bus.frontTire.rotation.z -= .1;
-	bus.backTire.rotation.z -= .1;
-
+	
 	updateBus();
 
 	renderer.render(scene, camera);
@@ -316,7 +338,11 @@ var mousePos= { x:0, y:0 };
 function handleMouseMove(e) {
 	var tx = -1 + (e.clientX / WIDTH) *2;
 	var ty = -1 + (e.clientY / HEIGHT) *2;
-	mousePos ={x:tx, y:ty};
+	mousePos = {x:tx, y:ty};
+}
+
+function handleClick() {
+	rotateBusX();
 }
 
 function init() {
@@ -331,7 +357,7 @@ function init() {
 	// createBarn();
 	// createGround();
 	document.addEventListener('mousemove', handleMouseMove, false);
-
+	document.addEventListener('click', handleClick, false);
 	loop();
 }
 
