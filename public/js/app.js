@@ -245,7 +245,7 @@ var Bus = function() {
 	hood.position.y = -5;
 	hood.position.z = 0;
 	hood.castShadow = true;
-	chasis.receiveShadow = true;
+	hood.receiveShadow = true;
 	this.mesh.add(hood)
 
 	// create tires
@@ -325,6 +325,7 @@ function normalize(v, vmin, vmax, tmin, tmax) {
 }
 
 function loop() {
+	sky.mesh.rotation.z += .001;
 
 	updateBus();
 
