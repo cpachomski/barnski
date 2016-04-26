@@ -139,7 +139,41 @@ Sea = function() {
 	this.mesh.receiveShadow = true;
 };
 
+//#CLOUDS
 
+Cloud = function() {
+	//container to hold cloud parts
+	this.mesh = new THREE.Object3D();
+
+	var geom = new THREE.BoxGeometry(20,20,20);
+	var mat = new THREE.MeshPhongMaterial({
+		color: Colors.white
+	});
+
+	var nBlocks = 3 + Math.floor(Math.random()*3);
+
+	for ( var i = 0; i < nBlocks; i++ ) {
+		var m = new THREE.mesh(geom, mat);
+
+		//randomly set position/rotation of cube
+		m.position.x = i*15;
+		m.position.y = Math.random() * 10;
+		m.position.z = Math.random() * 10;
+		m.rotation.z = Math.random() * Math.PI * 2;
+		m.rotation.y = Math.random() * Math.PI * 2;
+
+		//randomly set size of cube
+		var s = .1 + Math.random() * .9;
+		m.scale.set(s,s,s);
+
+		//allow cube to cast and receive shadows
+		m.castShadow = true;
+		m.receiveShadow = true;
+
+		this.mesh.add(m);
+	}
+
+};
 
 var sea;
 
