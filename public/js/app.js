@@ -97,9 +97,7 @@ function createLights() {
 	// A directional light shines from a specific direction. 
 	// It acts like the sun, that means that all the rays produced are parallel.
 	shadowLight = new THREE.DirectionalLight(0xffffff, .8);
-
 	shadowLight.position.set(100, 150, 100);
-
 	shadowLight.castShadow = true;
 
 	//define visible area of projected shadow
@@ -115,9 +113,14 @@ function createLights() {
 	shadowLight.shadow.mapSize.width = 2048;
 	shadowLight.shadow.mapSize.height = 2048;
 
+
+	//add ambient light to make scene prettier
+	ambientLight = new THREE.AmbientLight(0xdc8874, .5);
+
 	//activate lights
 	scene.add(hemisphereLight);
 	scene.add(shadowLight);
+	scene.add(ambientLight);
 
 }
 
@@ -265,26 +268,22 @@ var Bus = function() {
 	this.frontRightTire.position.x = 30;
 	this.frontRightTire.position.y = -12;
 	this.frontRightTire.position.z = 14;
-	this.frontRightTire.castShadow = true;
 	this.frontRightTire.receiveShadow = true;
 
 	this.frontLeftTire.position.x = 30;
 	this.frontLeftTire.position.y = -12;
 	this.frontLeftTire.position.z = -14;
-	this.frontLeftTire.castShadow = true;
 	this.frontLeftTire.receiveShadow = true;
 
 	this.backRightTire.position.x = -20;
 	this.backRightTire.position.y = -12;
 	this.backRightTire.position.z = 14;
-	this.backRightTire.castShadow = true;
 	this.backRightTire.receiveShadow = true;
 
 
 	this.backLeftTire.position.x = -20;
 	this.backLeftTire.position.y = -12;
 	this.backLeftTire.position.z = -14;
-	this.backLeftTire.castShadow = true;
 	this.backLeftTire.receiveShadow = true;
 
 	this.mesh.add(this.frontRightTire);
