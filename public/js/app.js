@@ -12,7 +12,8 @@ var Colors = {
 	blue:0x68c3c0,
 	grass: 0x3D8020,
 	yellow: 0xF6E559,
-	black: 0x333333
+	black: 0x333333,
+	windshield: 0xCFDDDF,
 };
 
 var scene,
@@ -233,7 +234,6 @@ var Bus = function() {
 	var geomChasis = new THREE.BoxGeometry(75, 25, 25, 1, 1, 1);
 	var matChasis = new THREE.MeshPhongMaterial({color: Colors.yellow, shading: THREE.FlatShading});
 	var chasis = new THREE.Mesh(geomChasis, matChasis);
-	chasis.castShadow = true;
 	chasis.receiveShadow = true;
 	this.mesh.add(chasis);
 
@@ -244,7 +244,6 @@ var Bus = function() {
 	hood.position.x = 40;
 	hood.position.y = -5;
 	hood.position.z = 0;
-	hood.castShadow = true;
 	hood.receiveShadow = true;
 	this.mesh.add(hood)
 
@@ -256,9 +255,15 @@ var Bus = function() {
 	this.backRightTire = new THREE.Mesh(geomTire, matTire);
 	this.backLeftTire = new THREE.Mesh(geomTire, matTire);
 
-	//positionTires and add to mesh
+	//create windshield
+	var geomWindshield = new THREE.BoxGeometry(9,7,25,1,1,1);
+	var matWindshield = new THREE.MeshPhongMaterial({color: Colors.windshield, shading: THREE.FlatShading});
+	this.windshield = new THREE.Mesh(geomWindshield, matWindshield);
+	this.windshield.position.x = 33;
+	this.windshield.position.y = 7;
+	this.mesh.add(this.windshield);
 
-	
+	//positionTires and add to mesh
 	this.frontRightTire.position.x = 30;
 	this.frontRightTire.position.y = -12;
 	this.frontRightTire.position.z = 14;
