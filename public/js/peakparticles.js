@@ -1,6 +1,6 @@
 
-			var container, stats;
-			var camera, controls, scene, renderer;
+			
+			var container, camera, controls, scene, renderer;
 			var objects = [], plane;
 
 			var raycaster = new THREE.Raycaster();
@@ -30,7 +30,7 @@
 
 				scene = new THREE.Scene();
 
-				scene.add( new THREE.AmbientLight( 0x505050 ) );
+				scene.add( new THREE.AmbientLight( 0x101010 ) );
 
 				var light = new THREE.SpotLight( 0xffffff, 1.5 );
 				light.position.set( 0, 500, 2000 );
@@ -44,23 +44,15 @@
 
 				scene.add( light );
 
-				var geometry = new THREE.BoxGeometry( 40, 40, 40 );
 
-				for ( var i = 0; i < 200; i ++ ) {
+				for ( var i = 0; i < 300; i ++ ) {
+					var radius = Math.random() * 10;
+					var geometry = new THREE.SphereGeometry( radius, 32, 32 );
+					var object = new THREE.Mesh( geometry, new THREE.MeshLambertMaterial( { color: 0x333333 } ) );
 
-					var object = new THREE.Mesh( geometry, new THREE.MeshLambertMaterial( { color: Math.random() * 0xffffff } ) );
-
-					object.position.x = Math.random() * 1000 - 500;
-					object.position.y = Math.random() * 600 - 300;
-					object.position.z = Math.random() * 800 - 400;
-
-					object.rotation.x = Math.random() * 2 * Math.PI;
-					object.rotation.y = Math.random() * 2 * Math.PI;
-					object.rotation.z = Math.random() * 2 * Math.PI;
-
-					object.scale.x = Math.random() * 2 + 1;
-					object.scale.y = Math.random() * 2 + 1;
-					object.scale.z = Math.random() * 2 + 1;
+					object.position.x = Math.random() * 100
+					object.position.y = Math.random() * 100
+					object.position.z = Math.random() * 100
 
 					object.castShadow = true;
 					object.receiveShadow = true;
@@ -95,9 +87,6 @@
 				info.style.textAlign = 'center';
 				info.innerHTML = '<a href="http://threejs.org" target="_blank">three.js</a> webgl - draggable cubes';
 				container.appendChild( info );
-
-				stats = new Stats();
-				container.appendChild( stats.dom );
 
 				renderer.domElement.addEventListener( 'mousemove', onDocumentMouseMove, false );
 				renderer.domElement.addEventListener( 'mousedown', onDocumentMouseDown, false );
@@ -226,8 +215,6 @@
 				requestAnimationFrame( animate );
 
 				render();
-				stats.update();
-
 			}
 
 			function render() {
