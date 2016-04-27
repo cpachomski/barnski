@@ -3,10 +3,3 @@ html, body {
 }
 
 
-#world {
-	position: absolute;
-	width: 100%;
-	height: 100%;
-	overflow: hidden;
-	background: linear-gradient( #CC8D82, #947B76 );
-}
